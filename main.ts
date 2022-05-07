@@ -33,6 +33,9 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         ........................
         ........................
         `, SpriteKind.Enemy)
+    statusbar = statusbars.create(10, 4, StatusBarKind.EnemyHealth)
+    statusbar.attachToSprite(mySprite2)
+    statusbar.value = 5
     mySprite2.setPosition(0, 0)
     mySprite2.follow(mySprite, 20)
 })
@@ -152,9 +155,15 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    mySprite2.destroy(effects.spray, 500)
+    statusbar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true)
+    statusbar.value += 1
+    projectile.destroy()
+    if (statusbar.value == statusbar.max) {
+        mySprite2.destroy(effects.rings, 500)
+    }
 })
 let projectile: Sprite = null
+let statusbar: StatusBarSprite = null
 let mySprite2: Sprite = null
 let nav = ""
 let mySprite3: Sprite = null
