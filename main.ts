@@ -38,6 +38,9 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     statusbar.value = 5
     mySprite2.setPosition(0, 0)
     mySprite2.follow(mySprite, 20)
+    game.splash("Enemy is comming!!")
+    info.setLife(3)
+    story.printCharacterText("Yo wtf")
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (nav == "left") {
