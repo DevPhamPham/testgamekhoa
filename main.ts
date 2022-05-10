@@ -38,6 +38,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     statusbar.value = 5
     mySprite2.setPosition(0, 0)
     mySprite2.follow(mySprite, 20)
+    game.splash("g", "d")
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (nav == "left") {
