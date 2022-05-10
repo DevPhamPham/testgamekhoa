@@ -1,13 +1,14 @@
 enum ActionKind {
-    Walking,
-    Idle,
-    Jumping
+	Walking,
+	Idle,
+	Jumping,
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    nav = "up"
-})
+	nav = "up";
+});
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    mySprite2 = sprites.create(img`
+	mySprite2 = sprites.create(
+		img`
         ........................
         ........................
         ........................
@@ -32,19 +33,23 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         ........................
         ........................
         ........................
-        `, SpriteKind.Enemy)
-    statusbar = statusbars.create(10, 4, StatusBarKind.EnemyHealth)
-    statusbar.attachToSprite(mySprite2)
-    statusbar.value = 5
-    mySprite2.setPosition(0, 0)
-    mySprite2.follow(mySprite, 20)
-    game.splash("Enemy is comming!!")
-    info.setLife(3)
-    story.printCharacterText("Yo wtf")
-})
+        `,
+		SpriteKind.Enemy
+	);
+	statusbar = statusbars.create(10, 4, StatusBarKind.EnemyHealth);
+	statusbar.attachToSprite(mySprite2);
+	statusbar.value = 5;
+	mySprite2.setPosition(0, 0);
+	mySprite2.follow(mySprite, 20);
+	game.splash("Enemy is comming!!");
+	info.setLife(3);
+	story.printCharacterText("Yo wtf");
+	game.splash("g", "d");
+});
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (nav == "left") {
-        projectile = sprites.createProjectileFromSprite(img`
+	if (nav == "left") {
+		projectile = sprites.createProjectileFromSprite(
+			img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -61,10 +66,15 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
-            `, mySprite, -100, 0)
-    } else {
-        if (nav == "right") {
-            projectile = sprites.createProjectileFromSprite(img`
+            `,
+			mySprite,
+			-100,
+			0
+		);
+	} else {
+		if (nav == "right") {
+			projectile = sprites.createProjectileFromSprite(
+				img`
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
@@ -81,10 +91,15 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
                 . . . . . . . . . . . . . . . . 
-                `, mySprite, 100, 0)
-        } else {
-            if (nav == "down") {
-                projectile = sprites.createProjectileFromSprite(img`
+                `,
+				mySprite,
+				100,
+				0
+			);
+		} else {
+			if (nav == "down") {
+				projectile = sprites.createProjectileFromSprite(
+					img`
                     . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . . 
@@ -101,10 +116,15 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                     . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . . 
                     . . . . . . . . . . . . . . . . 
-                    `, mySprite, 0, 100)
-            } else {
-                if (nav == "up") {
-                    projectile = sprites.createProjectileFromSprite(img`
+                    `,
+					mySprite,
+					0,
+					100
+				);
+			} else {
+				if (nav == "up") {
+					projectile = sprites.createProjectileFromSprite(
+						img`
                         . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
@@ -121,57 +141,70 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                         . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
                         . . . . . . . . . . . . . . . . 
-                        `, mySprite, 0, -100)
-                }
-            }
-        }
-    }
-})
+                        `,
+						mySprite,
+						0,
+						-100
+					);
+				}
+			}
+		}
+	}
+});
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    nav = "left"
-})
+	nav = "left";
+});
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    nav = "right"
-})
+	nav = "right";
+});
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    nav = "down"
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
-    if (nav == "left") {
-        pause(100)
-        mySprite3.x = mySprite3.x + -16
-    } else {
-        if (nav == "right") {
-            pause(100)
-            mySprite3.x = mySprite3.x + 16
-        } else {
-            if (nav == "down") {
-                pause(100)
-                mySprite3.y = mySprite3.y + 16
-            } else {
-                if (nav == "up") {
-                    pause(100)
-                    mySprite3.y = mySprite3.y + -16
-                }
-            }
-        }
-    }
-})
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    statusbar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true)
-    statusbar.value += 1
-    projectile.destroy()
-    if (statusbar.value == statusbar.max) {
-        mySprite2.destroy(effects.rings, 500)
-    }
-})
-let projectile: Sprite = null
-let statusbar: StatusBarSprite = null
-let mySprite2: Sprite = null
-let nav = ""
-let mySprite3: Sprite = null
-let mySprite: Sprite = null
-mySprite = sprites.create(img`
+	nav = "down";
+});
+sprites.onOverlap(
+	SpriteKind.Player,
+	SpriteKind.Food,
+	function (sprite, otherSprite) {
+		if (nav == "left") {
+			pause(100);
+			mySprite3.x = mySprite3.x + -16;
+		} else {
+			if (nav == "right") {
+				pause(100);
+				mySprite3.x = mySprite3.x + 16;
+			} else {
+				if (nav == "down") {
+					pause(100);
+					mySprite3.y = mySprite3.y + 16;
+				} else {
+					if (nav == "up") {
+						pause(100);
+						mySprite3.y = mySprite3.y + -16;
+					}
+				}
+			}
+		}
+	}
+);
+sprites.onOverlap(
+	SpriteKind.Projectile,
+	SpriteKind.Enemy,
+	function (sprite, otherSprite) {
+		statusbar.setStatusBarFlag(StatusBarFlag.SmoothTransition, true);
+		statusbar.value += 1;
+		projectile.destroy();
+		if (statusbar.value == statusbar.max) {
+			mySprite2.destroy(effects.rings, 500);
+		}
+	}
+);
+let projectile: Sprite = null;
+let statusbar: StatusBarSprite = null;
+let mySprite2: Sprite = null;
+let nav = "";
+let mySprite3: Sprite = null;
+let mySprite: Sprite = null;
+mySprite = sprites.create(
+	img`
     . . . . . . f f f f . . . . . . 
     . . . . f f f 2 2 f f f . . . . 
     . . . f f f 2 2 2 2 f f f . . . 
@@ -188,11 +221,14 @@ mySprite = sprites.create(img`
     . . 4 4 f 4 4 5 5 4 4 f 4 4 . . 
     . . . . . f f f f f f . . . . . 
     . . . . . f f . . f f . . . . . 
-    `, SpriteKind.Player)
-controller.moveSprite(mySprite, 90, 90)
-scene.cameraFollowSprite(mySprite)
-tiles.setCurrentTilemap(tilemap`level1`)
-mySprite3 = sprites.create(img`
+    `,
+	SpriteKind.Player
+);
+controller.moveSprite(mySprite, 90, 90);
+scene.cameraFollowSprite(mySprite);
+tiles.setCurrentTilemap(tilemap`level1`);
+mySprite3 = sprites.create(
+	img`
     . . . . . . . . b b b b b . . . 
     . . . . . . b b d d d d b b . . 
     . . . . . b d d d d d d d c . . 
@@ -209,14 +245,16 @@ mySprite3 = sprites.create(img`
     c c c c c c b b b b b c c c c c 
     c c c c c c c b b b b b c c c c 
     c c c c c c c c b b b b b c c c 
-    `, SpriteKind.Food)
-mySprite3.setPosition(100, 75)
-music.ringTone(175)
-music.rest(music.beat(BeatFraction.Breve))
-music.playMelody("E D F D E D C D ", 250)
-music.playMelody("E D F D E D C D ", 250)
-music.playMelody("E D F D E D C D ", 250)
-music.playMelody("E D F D E D C D ", 250)
-music.playMelody("E G E F A G E D ", 250)
-music.playMelody("E G E F A G E D ", 250)
-music.setVolume(0)
+    `,
+	SpriteKind.Food
+);
+mySprite3.setPosition(100, 75);
+music.ringTone(175);
+music.rest(music.beat(BeatFraction.Breve));
+music.playMelody("E D F D E D C D ", 250);
+music.playMelody("E D F D E D C D ", 250);
+music.playMelody("E D F D E D C D ", 250);
+music.playMelody("E D F D E D C D ", 250);
+music.playMelody("E G E F A G E D ", 250);
+music.playMelody("E G E F A G E D ", 250);
+music.setVolume(0);
