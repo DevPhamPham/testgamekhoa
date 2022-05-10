@@ -208,3 +208,12 @@ mySprite3 = sprites.create(img`
     c c c c c c c c b b b b b c c c 
     `, SpriteKind.Food)
 mySprite3.setPosition(100, 75)
+music.ringTone(175)
+music.rest(music.beat(BeatFraction.Breve))
+music.playMelody("E D F D E D C D ", 250)
+music.playMelody("E D F D E D C D ", 250)
+music.playMelody("E D F D E D C D ", 250)
+music.playMelody("E D F D E D C D ", 250)
+music.playMelody("C D C F D E D C ", 250)
+music.playMelody("C D C F D E D C ", 250)
+music.setVolume(0)
